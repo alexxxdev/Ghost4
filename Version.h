@@ -33,10 +33,10 @@
 #else
 
   /**
-   * Marlin release version identifier固件改名字
+   * Marlin release version identifier
    */
-  //#define SHORT_BUILD_VERSION "Marlin Ghost_V1 "
-#define SHORT_BUILD_VERSION ""
+  #define SHORT_BUILD_VERSION "1.1.9"
+
   /**
    * Verbose version identifier which should contain a reference to the location
    * from where the binary was downloaded or the source code was compiled.
@@ -70,7 +70,7 @@
   /**
    * Defines a generic printer name to be output to the LCD after booting Marlin.
    */
-  #define MACHINE_NAME "FB-Tornado 2"
+  #define MACHINE_NAME "3D Printer"
 
   /**
    * The SOURCE_CODE_URL is the location where users will find the Marlin Source

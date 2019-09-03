@@ -17,14 +17,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 断料检测监测时间
+ *
  */
 
 /**
  * runout.h - Runout sensor support
  */
 
-#ifndef _RUNOUT_H_       
+#ifndef _RUNOUT_H_
 #define _RUNOUT_H_
 
 #include "cardreader.h"
@@ -34,45 +34,26 @@
 
 #include "MarlinConfig.h"
 
-#define FIL_RUNOUT_THRESHOLD 200
-#define  RUNOUT_CHECK_PRERIOD 100
+#define FIL_RUNOUT_THRESHOLD 5
 
 class FilamentRunoutSensor {
   public:
     FilamentRunoutSensor() {}
 
     static void setup();
-	
-	FORCE_INLINE static void reset() {
-		runout_count = 0; filament_ran_out = false; LAST_RO_TIME = 0;
-	}
+
+    FORCE_INLINE static void reset() { runout_count = 0; filament_ran_out = false; }
 
     FORCE_INLINE static void run() {
-	  if(check()){
-		  if ((IS_SD_PRINTING || print_job_timer.isRunning()) && !filament_ran_out) {
-			filament_ran_out = true;
-			enqueue_and_echo_commands_P(PSTR(FILAMENT_RUNOUT_SCRIPT));
-			planner.synchronize();
-		  }
-		  notify_host_filament_runout();
-	  }  
+      if ((IS_SD_PRINTING() || print_job_timer.isRunning()) && check() && !filament_ran_out) {
+        filament_ran_out = true;
+        enqueue_and_echo_commands_P(PSTR(FILAMENT_RUNOUT_SCRIPT));
+        planner.synchronize();
+      }
     }
   private:
     static bool filament_ran_out;
     static uint8_t runout_count;
-	  static long LAST_RO_TIME;
-	
-	  static long LAST_RO_Notify_TIME;
-    
-	FORCE_INLINE static void notify_host_filament_runout(){
-	  //notify every 2 second
-	  if(millis() - LAST_RO_Notify_TIME > 2000){
-		LAST_RO_Notify_TIME = millis();
-		SERIAL_ERROR_START();
-		SERIAL_ERRORLNPGM(MSG_FILAMENTCHANGE);
-		SERIAL_EOL();
-	  }
-	}
 
     FORCE_INLINE static bool check() {
       #if NUM_RUNOUT_SENSORS < 2
@@ -95,28 +76,7 @@ class FilamentRunoutSensor {
           #endif
         }
       #endif
-
-		if (is_out)
-		{
-
-			if (LAST_RO_TIME < millis())
-			{
-				LAST_RO_TIME = millis() + RUNOUT_CHECK_PRERIOD;
-				runout_count++;
-
-			}
-			if (runout_count > FIL_RUNOUT_THRESHOLD)return true;
-
-		}
-		else
-		{
-			runout_count = 0;
-		}
-	
-
-    //  return (is_out ? ++runout_count : (runout_count = 0)) > FIL_RUNOUT_THRESHOLD;
-
-		return false;
+      return (is_out ? ++runout_count : (runout_count = 0)) > FIL_RUNOUT_THRESHOLD;
     }
 };
 

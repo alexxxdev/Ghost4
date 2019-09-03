@@ -34,8 +34,7 @@ FilamentRunoutSensor runout;
 
 bool FilamentRunoutSensor::filament_ran_out; // = false
 uint8_t FilamentRunoutSensor::runout_count; // = 0
-long FilamentRunoutSensor::LAST_RO_TIME;
-long FilamentRunoutSensor::LAST_RO_Notify_TIME;
+
 void FilamentRunoutSensor::setup() {
 
   #if ENABLED(FIL_RUNOUT_PULLUP)
