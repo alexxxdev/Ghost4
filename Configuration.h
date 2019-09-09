@@ -131,7 +131,7 @@
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_RAMPS_14_EFB
+  #define MOTHERBOARD BOARD_MKS_GEN_L
 #endif
 
 // Optional custom name for your RepStrap or other custom machine
@@ -149,7 +149,7 @@
 #define EXTRUDERS 1
 
 // Generally expected filament diameter (1.75, 2.85, 3.0, ...). Used for Volumetric, Filament Width Sensor, etc.
-#define DEFAULT_NOMINAL_FILAMENT_DIA 3.0
+#define DEFAULT_NOMINAL_FILAMENT_DIA 1.75
 
 // For Cyclops or any "multi-extruder" that shares a single nozzle.
 //#define SINGLENOZZLE
@@ -224,8 +224,8 @@
 // Offset of the extruders (uncomment if using more than one and relying on firmware to position when changing).
 // The offset has to be X=0, Y=0 for the extruder 0 hotend (default extruder).
 // For the other hotends it is their distance from the extruder 0 hotend.
-//#define HOTEND_OFFSET_X {0.0, 20.00} // (in mm) for each extruder, offset of the hotend on the X axis
-//#define HOTEND_OFFSET_Y {0.0, 5.00}  // (in mm) for each extruder, offset of the hotend on the Y axis
+#define HOTEND_OFFSET_X {0.0, 0.0} // (in mm) for each extruder, offset of the hotend on the X axis
+#define HOTEND_OFFSET_Y {0.0, -18.0}  // (in mm) for each extruder, offset of the hotend on the Y axis
 
 // @section machine
 
@@ -316,7 +316,7 @@
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
-#define TEMP_SENSOR_BED 0
+#define TEMP_SENSOR_BED 11
 #define TEMP_SENSOR_CHAMBER 0
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
@@ -365,7 +365,7 @@
 
 // Comment the following line to disable PID and enable bang-bang.
 #define PIDTEMP
-#define BANG_MAX 255     // Limits current to nozzle while in bang-bang mode; 255=full current
+#define BANG_MAX 150     // Limits current to nozzle while in bang-bang mode; 255=full current
 #define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 #if ENABLED(PIDTEMP)
@@ -381,9 +381,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
-  #define DEFAULT_Kp 22.2
-  #define DEFAULT_Ki 1.08
-  #define DEFAULT_Kd 114
+  #define DEFAULT_Kp 14.64
+  #define DEFAULT_Ki 1.01
+  #define DEFAULT_Kd 53.07
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
@@ -529,13 +529,13 @@
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+#define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+#define X_MAX_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+#define Y_MAX_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
 #define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the probe.
+#define Z_MIN_PROBE_ENDSTOP_INVERTING true // set to true to invert the logic of the probe.
 
 /**
  * Stepper Drivers
@@ -609,7 +609,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 94 }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -624,7 +624,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 200, 10000 }
 
 /**
  * Default Acceleration (change/s) change = mm/s
@@ -717,7 +717,7 @@
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
  *   (e.g., an inductive probe or a nozzle-based probe-switch.)
  */
-//#define FIX_MOUNTED_PROBE
+#define FIX_MOUNTED_PROBE
 
 /**
  * Z Servo Probe, such as an endstop switch on a rotating arm.
@@ -765,7 +765,7 @@
  *
  *      +-- BACK ---+
  *      |           |
- *    L |    (+) P  | R <-- probe (20,20)
+ *    L |    (+) P  | R <-- probe (0,0)
  *    E |           | I
  *    F | (-) N (+) | G <-- nozzle (10,10)
  *    T |           | H
@@ -846,15 +846,15 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
+#define INVERT_X_DIR true
 #define INVERT_Y_DIR true
 #define INVERT_Z_DIR false
 
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
-#define INVERT_E1_DIR false
+#define INVERT_E0_DIR true
+#define INVERT_E1_DIR true
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
 #define INVERT_E4_DIR false
@@ -925,10 +925,10 @@
  * For other boards you may need to define FIL_RUNOUT_PIN, FIL_RUNOUT2_PIN, etc.
  * By default the firmware assumes HIGH=FILAMENT PRESENT.
  */
-//#define FILAMENT_RUNOUT_SENSOR
+#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define NUM_RUNOUT_SENSORS   1     // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
-  #define FIL_RUNOUT_INVERTING false // set to true to invert the logic of the sensor.
+  #define FIL_RUNOUT_INVERTING true // set to true to invert the logic of the sensor.
   #define FIL_RUNOUT_PULLUP          // Use internal pullup for filament runout pins.
   #define FILAMENT_RUNOUT_SCRIPT "M600"
 #endif
@@ -1022,10 +1022,10 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  //#define LEFT_PROBE_BED_POSITION MIN_PROBE_EDGE
-  //#define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - MIN_PROBE_EDGE)
-  //#define FRONT_PROBE_BED_POSITION MIN_PROBE_EDGE
-  //#define BACK_PROBE_BED_POSITION (Y_BED_SIZE - MIN_PROBE_EDGE)
+  #define LEFT_PROBE_BED_POSITION 60
+  #define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - MIN_PROBE_EDGE)
+  #define FRONT_PROBE_BED_POSITION 60
+  #define BACK_PROBE_BED_POSITION (Y_BED_SIZE - MIN_PROBE_EDGE)
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
@@ -1222,7 +1222,7 @@
 // M501 - reads parameters from EEPROM (if you need reset them after you changed them temporarily).
 // M502 - reverts to the default "factory settings".  You still need to store them in EEPROM afterwards if you want to.
 //
-//#define EEPROM_SETTINGS // Enable for M500 and M501 commands
+#define EEPROM_SETTINGS // Enable for M500 and M501 commands
 //#define DISABLE_M503    // Saves ~2700 bytes of PROGMEM. Disable for release!
 #define EEPROM_CHITCHAT   // Give feedback on EEPROM commands. Disable to save PROGMEM.
 
@@ -1273,11 +1273,11 @@
  *    P1  Raise the nozzle always to Z-park height.
  *    P2  Raise the nozzle by Z-park amount, limited to Z_MAX_POS.
  */
-//#define NOZZLE_PARK_FEATURE
+#define NOZZLE_PARK_FEATURE
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   // Specify a park position as { X, Y, Z }
-  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
+  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MIN_POS + 10), 10 }
   #define NOZZLE_PARK_XY_FEEDRATE 100   // X and Y axes feedrate in mm/s (also used for delta printers Z axis)
   #define NOZZLE_PARK_Z_FEEDRATE 5      // Z axis feedrate in mm/s (not used for delta printers)
 #endif
@@ -1425,7 +1425,7 @@
  * you must uncomment the following option or it won't work.
  *
  */
-//#define SDSUPPORT
+#define SDSUPPORT
 
 /**
  * SD CARD: SPI SPEED
