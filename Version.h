@@ -33,10 +33,10 @@
 #else
 
   /**
-   * Marlin release version identifier固件改名字
+   * Marlin release version identifier
    */
-  //#define SHORT_BUILD_VERSION "Marlin Ghost_V1 "
-#define SHORT_BUILD_VERSION "1.1.9"
+  #define SHORT_BUILD_VERSION "1.1.9"
+
   /**
    * Verbose version identifier which should contain a reference to the location
    * from where the binary was downloaded or the source code was compiled.
